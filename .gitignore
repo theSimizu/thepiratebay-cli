@@ -1,0 +1,4 @@
+downloads.json
+venv/
+__pycache__/
+.gitignore

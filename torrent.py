@@ -1,5 +1,4 @@
 import libtorrent as lt
-import datetime
 import time
 import json
 import os

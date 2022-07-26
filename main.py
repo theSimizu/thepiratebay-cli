@@ -27,6 +27,7 @@ def _choice(args):
     if choice < 1 or choice > len(args): raise Exception
     return choice
         
+# Buid the table
 def _table(args):
     hash_size = 152
     hashes = '#'*hash_size
@@ -37,6 +38,7 @@ def _table(args):
     print(f'{hashes}\n\n')
     return _choice(arg)
 
+# Get a dict of category and it code
 def _get_categories():
     categories = {
         'All': 0,
@@ -104,13 +106,11 @@ def _category_code(cat):
 
 def search():
     cat = input('\nFilter by category?[y/N]\n\n>')
-
     if cat.upper() in ('Y', 'YES'):
         cat = _table(list(_get_categories().keys()))
         cat = _category_code(cat)
     else:
         cat = 'All'
-
     search = input('Pirate search: ')
     piratesearcher.search(search, _get_categories()[cat])
     magnet = piratesearcher.get_magnet(int(input('\n> ')))
@@ -120,15 +120,20 @@ def continue_download():
     file = open('downloads.json', 'r')
     downloads = json.loads(file.read())
     file.close()
-    d = []
+    download_name = []
+    download_link = []
     for download in downloads:
-        name = download["name"]
+        link = download['magnet_link']
+        name = download['name']
         total_downloaded = download['total_downloaded']
         total_size = download['size']
         complete = total_downloaded / total_size * 100
         if complete == 100: continue
-        d.append(f'{name} | ({complete:.2f}%) completo')
-    choice = _table(d)
+        download_name.append(f'{name} | ({complete:.2f}%) completo')
+        download_link.append(link)
+    choice = _table(download_name) - 1
+    magnet = download_link[choice]
+    downloader.download(magnet)
 
 def run():
     print(name)

@@ -105,7 +105,7 @@ def _category_code(cat):
     return list(_get_categories().keys())[cat-1]
 
 def search():
-    cat = input('\nFilter by category?[y/N]\n\n>')
+    cat = input('\nFiltrar por categoria?[y/N]\n\n>')
     if cat.upper() in ('Y', 'YES'):
         cat = _table(list(_get_categories().keys()))
         cat = _category_code(cat)
@@ -135,6 +135,10 @@ def continue_download():
     magnet = download_link[choice]
     downloader.download(magnet)
 
+def download_from_link():
+    magnet = input('Cole o link aqui\n\n> ')
+    downloader.download(magnet)
+
 def run():
     print(name)
     try:
@@ -145,14 +149,10 @@ def run():
             elif start == 2:
                 continue_download()
             elif start == 3:
-                pass
+                download_from_link()
     except:
         quit()
 
-
-
-        
-        
 
 if __name__ == '__main__':
     run()
